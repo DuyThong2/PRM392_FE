@@ -1,0 +1,113 @@
+<resources>
+    <string name="app_name">PRM392FE</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- translatable="false" không dịch sang ngôn ngu khác được vd: english -> vn -->
+    <!-- Trường hợp generated values.xml không lấy giá trị ở file này, thì nên check plugin cả 2 file build.gradle.kts (app và project) -->
+    <!-- VD: trước đó dùng firebase tự generate default_web_client_id muốn generated values.xml nhận giá trị ở file này mà ko lấy -->
+    <!-- default_web_client_id tự động generate của firebase thì phải xóa: -->
+    <!-- plugin {alias(libs.plugins.google.gms.google.services)} cả 2 file build.gradle.kts (app và project) -->
+    <string name="default_web_client_id" translatable="false">964490954339-3mp2niajhh7btb1s7ll4l082pf6rkju3.apps.googleusercontent.com</string>
+
+    <!-- Configure Google Sign In -->
+    <!-- Lấy từ Project Settings trên Google Cloud -> Project Number -->
+    <string name="gcm_defaultSenderId" translatable="false">964490954339</string>
+    <!-- Lấy từ APIs & Services -> Credentials -> API Keys -->
+    <string name="google_api_key" translatable="false">AIzaSyDm838EQddKMPplz-mbZsMAdhbhh8CzALE</string>
+    <!-- Định dạng là "1:PROJECT_NUMBER:android:APP_HASH" -->
+    <!-- PROJECT NUMBER thì bằng với gcm_defaultSenderId / project number phía trên -->
+    <!-- Cách dễ nhất để lấy là xem trong file google-services.json cũ, lấy từ generated values.xml cũ -->
+    <string name="google_app_id" translatable="false">1:964490954339:android:8eaad91f1e79fdc9698830</string>
+
+
+    <string name="no_account_register">No Account? <b>Register</b></string>
+    <string name="have_account_login">Have account? <b>Login</b></string>
+
+    <!-- những thứ còn lại ở generated values.xml có thể sau nay dùng, đã bỏ bớt firebase dtb và default_web_client_id tự generate của firebase -->
+    <!--    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDe7uQujqioC93wBmKJaxqXotQUbtCMmLs</string>-->
+    <!--    <string name="google_storage_bucket" translatable="false">gundam-shop-mobile.firebasestorage.app</string>-->
+    <!--    <string name="project_id" translatable="false">gundam-shop-mobile</string>-->
+
+
+    <string name="product_image">Product image</string>
+    <string name="title_activity_product_list">ProductListActivity</string>
+    <string name="title_activity_product_detail">ProductDetailActivity</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
+    <string name="mua_v_i_voucher_118_600">Mua với voucher 118.600₫</string>
+    <string name="avatar_desc">Avatar</string>
+    <string name="member_tag_empty"> </string>
+    <string name="favorites_title">Sản phẩm yêu thích</string>
+    <string name="favorites_empty_message">Bạn chưa có sản phẩm nào yêu thích? Hãy bắt đầu mua sắm ngay nào!</string>
+    <string name="favorites_cta">Mua sắm ngay</string>
+    <string name="favorites_empty_desc">Hình minh họa sản phẩm yêu thích rỗng</string>
+    <string name="processing">Đang xử lý…</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="change_pw_success">Đổi mật khẩu thành công</string>
+    <string name="change_pw_failed">Không thể đổi mật khẩu</string>
+    <string name="back">Quay lại</string>
+    <string name="personal_info_title">Thông tin cá nhân</string>
+    <string name="label_full_name">Họ và tên</string>
+    <string name="label_phone">Số điện thoại</string>
+    <string name="label_email">Email</string>
+    <string name="placeholder_dash">-</string>
+    <string name="delete_account">Xoá tài khoản</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="enter_valid_email">Vui lòng nhập email hợp lệ</string>
+    <string name="forgot_email_sent">Đã gửi hướng dẫn đổi mật khẩu tới email của bạn (demo)</string>
+    <string name="update">Cập nhật</string>
+    <string name="update_failed">Không thể cập nhật thông tin</string>
+    <string name="confirm_update_title">Xác nhận cập nhật</string>
+    <string name="confirm_update_message">Bạn có chắc muốn cập nhật thông tin cá nhân?</string>
+    <string name="cancel">Huỷ</string>
+    <string name="delete_account_title">Xóa tài khoản</string>
+    <string name="delete_account_message">Sau khi xóa tài khoản, tất cả thông tin của bạn trên hệ thống sẽ không còn tồn tại. Nhập số điện thoại để xác nhận.</string>
+    <string name="delete_input_hint">Nhập số điện thoại để xác nhận</string>
+    <string name="delete_button">Xóa tài khoản</string>
+    <string name="delete_phone_label">Nhập số điện thoại %1$s vào ô bên dưới để xác nhận.</string>
+    <string name="fp_title">Tạo mật khẩu mới</string>
+    <string name="fp_description">Nhập email của bạn để nhận đường dẫn khôi phục mật khẩu.</string>
+    <string name="continue_label">Tiếp tục</string>
+    <string name="otp_title">Tạo mật khẩu mới</string>
+    <string name="otp_desc">Vui lòng nhập mã OTP vừa được gửi qua Email đến</string>
+    <string name="otp_email_placeholder">%1$s</string>
+    <string name="otp_digit_1">OTP chữ số 1</string>
+    <string name="otp_digit_2">OTP chữ số 2</string>
+    <string name="otp_digit_3">OTP chữ số 3</string>
+    <string name="otp_digit_4">OTP chữ số 4</string>
+    <string name="otp_digit_5">OTP chữ số 5</string>
+    <string name="otp_digit_6">OTP chữ số 6</string>
+    <string name="otp_digit_hint">Nhập chữ số</string>
+    <string name="otp_resend_label">Hoặc gửi lại OTP qua:</string>
+    <string name="otp_option_email">Email</string>
+    <string name="otp_option_zalo">Zalo</string>
+    <string name="otp_option_app">App Smember</string>
+    <string name="content_desc_back">Quay lại"</string>
+    <string name="reset_title">Tạo mật khẩu mới</string>
+    <string name="reset_subtitle">Hãy nhập mật khẩu mới của bạn</string>
+    <string name="label_password">Mật khẩu</string>
+    <string name="label_confirm_password">Nhập lại mật khẩu</string>
+    <string name="reset_pw_note">Mật khẩu tối thiểu có 6 kí tự, có ít nhất 1 chữ số và 1 chữ cái.</string>
+
+    <string name="payment_success_icon">Biểu tượng thanh toán thành công</string>
+    <string name="payment_success_title">Đặt hàng thành công!</string>
+    <string name="payment_success_message">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Đơn hàng của bạn đang được xử lý.</string>
+    <string name="back_to_home">Quay về trang chủ</string>
+
+
+    <string name="payment_failed_icon">Biểu tượng thanh toán thất bại</string>
+    <string name="payment_failed_title">Đặt hàng thất bại</string>
+    <string name="payment_failed_message">Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng kiểm tra lại thông tin và thử lại.</string>
+    <string name="try_again">Thử lại</string>
+    <string name="title_quick_order">QuickOrder</string>
+    <string name="title_order_detail_staff">Order Detail Staff</string>
+
+    <string-array name="order_status_list">
+        <item>Chờ xử lý</item>
+        <item>Đang giao hàng</item>
+        <item>Đang vận chuyển</item>
+        <item>Đã giao hàng</item>
+        <item>Đã hủy</item>
+        <item>Bị trả lại</item>
+        <item>Đã hoàn tiền</item>
+    </string-array>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#E51818</color>
+    <color name="colorPrimaryDark">#215A3F</color>
+    <color name="black_transparent">#8B000000</color>
+
+    <color name="gray">#808080</color>
+    <color name="teal_700">#018786</color>
+    <color name="orange">#F25912</color>
+    <color name="price_red_standard">#D32F2F</color>
+
+
+    <color name="colorGray01">#d3d3d3</color>
+    <color name="colorGray02">#cccccc</color>
+
+    <color name="brand_red">#E91E3F</color>
+    <color name="brand_pale_red">#FFDDE1</color>
+    <color name="text_dark">#222222</color>
+    <color name="text_gray">#777777</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="muted_green">#DFF5EA</color>
+    <color name="muted_green_text">#2EAA6F</color>
+    <color name="accent">#FF6F61</color>
+    <color name="bg_gray">#F5F6F8</color>
+    <color name="red_600">#D32F2F</color>
+
+    <color name="colorSuccess">#4CAF50</color>
+</resources>
