@@ -21,6 +21,12 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.prm392fe.R;
 import com.example.prm392fe.SessionManager;
+import com.example.prm392fe.adapter.ProductImageAdapter;
+import com.example.prm392fe.adapter.RelatedProductAdapter;
+import com.example.prm392fe.models.responses.ProductResponse;
+import com.example.prm392fe.ui.theme.GridSpacingItemDecoration;
+import com.example.prm392fe.viewModel.CartViewModel;
+import com.example.prm392fe.viewModel.ProductDetailViewModel;
 
 import java.util.List;
 
