@@ -3,16 +3,23 @@ package com.example.prm392fe.api;
 
 
 import com.example.prm392fe.models.ApiResponse;
+import com.example.prm392fe.models.PageResponse;
 import com.example.prm392fe.models.requests.AuthenticationRequest;
 import com.example.prm392fe.models.requests.ChangePasswordRequest;
+import com.example.prm392fe.models.requests.CreateOrderRequest;
+import com.example.prm392fe.models.requests.DeleteAccountRequest;
 import com.example.prm392fe.models.requests.GoogleTokenRequest;
 import com.example.prm392fe.models.requests.LogoutRequest;
 import com.example.prm392fe.models.requests.ResetPasswordRequest;
 import com.example.prm392fe.models.requests.UpdateReadMessageRequest;
+import com.example.prm392fe.models.requests.UserProfileUpdateRequest;
+import com.example.prm392fe.models.requests.UserRegisterRequest;
 import com.example.prm392fe.models.responses.AuthenticationResponse;
 import com.example.prm392fe.models.responses.ConversationResponse;
 import com.example.prm392fe.models.responses.CountResponse;
+import com.example.prm392fe.models.responses.LocationResponse;
 import com.example.prm392fe.models.responses.MessageResponse;
+import com.example.prm392fe.models.responses.OrderResponse;
 import com.example.prm392fe.models.responses.UserResponse;
 
 import java.util.List;
@@ -60,6 +67,40 @@ public interface ApiService {
     @POST("auth/verify-reset-code")
     Call<ApiResponse<Void>> verifyResetCode(@Body java.util.Map<String, String> payload);
 
+    @PUT("user/me")
+    Call<ApiResponse<UserResponse>> updateMyProfile(@Body UserProfileUpdateRequest request);
+
+    @retrofit2.http.HTTP(method = "DELETE", path = "user/me", hasBody = true)
+    Call<ApiResponse<Void>> deleteMyAccount(@Body DeleteAccountRequest request);
+
+
+    @GET("order/user/{id}")
+    Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersByUserId(@Path("id") int id);
+
+    @GET("order/status/user/{id}")
+    Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersByStatusAndUserId(@Path("id") int id,
+                                                                              @Query("status") String status);
+
+    @GET("order/{id}")
+    Call<ApiResponse<OrderResponse>> getOrderDetail(@Path("id") int id);
+
+    @GET("order/today")
+    Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersToday(
+            @Query("page") int page,
+            @Query("size") int size,
+            @Query("sortBy") String sortBy,
+            @Query("sortDir") String sortDir,
+            @Query("status") String status
+    );
+    @PUT("order/{id}/status")
+    Call<ApiResponse<OrderResponse>> updateOrderStatus(
+            @Path("id") int id,
+            @Query("status") String status
+    );
+
+    @POST("order")
+    Call<ApiResponse<OrderResponse>> createOrder(@Body CreateOrderRequest request, @Query("status") boolean status);
+
 
 
     @GET("api/conversations/{customerId}")
@@ -77,6 +118,13 @@ public interface ApiService {
 
     @PUT("api/messages/read")
     Call<ApiResponse<CountResponse>> updateReadMessages(@Body UpdateReadMessageRequest request);
+
+    // ----------------------------------LOCATION---------------------------------------
+    @GET("api/locations")
+    Call<ApiResponse<List<LocationResponse>>> getLocations();
+
+    @GET("api/conversations/list/{staffId}")
+    Call<ApiResponse<List<ConversationResponse>>> getConversations(@Path("staffId") int id);
 
 
 

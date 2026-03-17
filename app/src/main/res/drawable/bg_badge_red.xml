@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"> <!-- Hoặc "rectangle" nếu bạn muốn hình chữ nhật bo tròn -->
+
+    <solid android:color="@color/white" /> <!-- Màu nền badge -->
+
+    <!-- Nếu bạn chọn shape="rectangle", hãy dùng corner radius -->
+    <!-- <corners android:radius="10dp" /> -->
+
+    <size
+        android:width="18dp"
+        android:height="18dp" />
+</shape>

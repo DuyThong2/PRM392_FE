@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/FrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F2F2F2">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- This LinearLayout holds all the sections vertically -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- ================================== -->
+                <!-- (UPDATED) Logged-In Header Section -->
+                <!-- ================================== -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:padding="16dp">
+
+                    <!-- Avatar -->
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="85dp"
+                        android:layout_height="78dp"
+                        android:background="@android:color/transparent"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_launcher_foreground"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- User Name -->
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="TestUser123"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                        app:layout_constraintTop_toTopOf="@id/iv_avatar" />
+
+                    <!-- Phone Number -->
+                    <TextView
+                        android:id="@+id/tv_user_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="085****924"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                        app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
+
+                    <!-- Member Tag -->
+                    <TextView
+                        android:id="@+id/tv_member_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/bg_gray"
+                        android:paddingStart="12dp"
+                        android:paddingTop="4dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="4dp"
+                        android:text="MEMBER"
+                        android:textColor="@color/brand_red"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                        app:layout_constraintTop_toBottomOf="@id/tv_user_phone" />
+
+                    <!-- Divider 1 -->
+                    <View
+                        android:id="@+id/divider1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="#E0E0E0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_member_tag" />
+
+                    <!-- Stats Guideline -->
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_stats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5013193" />
+
+                    <!-- Orders Stat -->
+                    <ImageView
+                        android:id="@+id/iv_orders"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_nav_cart"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        app:tint="#E53935" />
+
+                    <TextView
+                        android:id="@+id/tv_orders_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_orders"
+                        app:layout_constraintStart_toEndOf="@id/iv_orders"
+                        app:layout_constraintTop_toTopOf="@id/iv_orders" />
+
+                    <TextView
+                        android:id="@+id/tv_orders_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng số đơn hàng"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@id/iv_orders"
+                        app:layout_constraintTop_toBottomOf="@id/iv_orders" />
+
+                    <!-- Points Stat -->
+                    <ImageView
+                        android:id="@+id/iv_points"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="16dp"
+                        android:src="@drawable/ic_profile_points"
+                        app:layout_constraintStart_toStartOf="@id/guideline_stats"
+                        app:layout_constraintTop_toBottomOf="@id/divider1"
+                        app:tint="#E53935" />
+
+                    <TextView
+                        android:id="@+id/tv_points_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="0đ"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_points"
+                        app:layout_constraintStart_toEndOf="@id/iv_points"
+                        app:layout_constraintTop_toTopOf="@id/iv_points" />
+
+                    <TextView
+                        android:id="@+id/tv_points_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng tiền tích luỹ"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toStartOf="@id/iv_points"
+                        app:layout_constraintTop_toBottomOf="@id/iv_points" />
+
+                    <!--                    &lt;!&ndash; Divider 2 &ndash;&gt;-->
+                    <!--                    <View-->
+                    <!--                        android:id="@+id/divider2"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        android:background="#E0E0E0"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_orders_label" />-->
+
+                    <!--                    &lt;!&ndash; Barcode Label &ndash;&gt;-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/tv_barcode_label"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        android:text="Vui lòng đưa mã này cho nhân viên để hưởng ưu đãi"-->
+                    <!--                        android:textColor="@android:color/black"-->
+                    <!--                        android:textSize="12sp"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/divider2" />-->
+
+                    <!--                    &lt;!&ndash; Barcode Placeholder (We can't generate a real one easily) &ndash;&gt;-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/tv_barcode_placeholder"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="80dp"-->
+                    <!--                        android:layout_marginTop="8dp"-->
+                    <!--                        android:background="#E0E0E0"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:text="[BARCODE PLACEHOLDER]"-->
+                    <!--                        android:textColor="#888888"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_barcode_label" />-->
+
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/tv_barcode_number"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="8dp"-->
+                    <!--                        android:text="6810"-->
+                    <!--                        android:textColor="@android:color/black"-->
+                    <!--                        android:textSize="20sp"-->
+                    <!--                        android:textStyle="bold"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_barcode_placeholder" />-->
+
+                    <!--                    &lt;!&ndash; Barcode Timer &ndash;&gt;-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/tv_barcode_timer"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="8dp"-->
+                    <!--                        android:text="Mã sẽ thay đổi sau 02:22"-->
+                    <!--                        android:textColor="@android:color/darker_gray"-->
+                    <!--                        android:textSize="12sp"-->
+                    <!--                        app:layout_constraintEnd_toStartOf="@id/tv_qr_switch"-->
+                    <!--                        app:layout_constraintHorizontal_chainStyle="packed"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_barcode_number" />-->
+
+                    <!--                    &lt;!&ndash; QR Switch &ndash;&gt;-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/tv_qr_switch"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="8dp"-->
+                    <!--                        android:text="Chuyển sang QRCode"-->
+                    <!--                        android:textColor="#E53935"-->
+                    <!--                        android:textSize="12sp"-->
+                    <!--                        android:textStyle="bold"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="@id/tv_barcode_timer"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toEndOf="@id/tv_barcode_timer"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@id/tv_barcode_timer" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- ================================== -->
+                <!-- Section 1: History (No Change) -->
+                <!-- ================================== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Lịch sử"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:orientation="vertical">
+
+                    <!-- Row 1: Lịch sử mua hàng -->
+                    <LinearLayout
+                        android:id="@+id/orderHistoryLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_history"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Lịch sử mua hàng"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Row 2: Tra cứu bảo hành -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_warranty"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Tra cứu bảo hành"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ================================== -->
+                <!-- Section 2: Account (No Change) -->
+                <!-- ================================== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tài khoản"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:orientation="vertical">
+
+                    <!-- Row 1: Thông tin cá nhân -->
+                    <LinearLayout
+                        android:id="@+id/personalInfoLL"
+                        android:onClick="openPersonalInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_nav_account"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Thông tin cá nhân"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Row 2: Số địa chỉ -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_location"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Số địa chỉ"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Row 3: Liên kết tài khoản -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_link"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Liên kết tài khoản"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Row 4: Đổi mật khẩu -->
+                    <LinearLayout
+                        android:id="@+id/ll_change_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_password"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Đổi mật khẩu"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ================================== -->
+                <!-- Section 3: Other (No Change) -->
+                <!-- ================================== -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Khác"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:orientation="vertical">
+
+                    <!-- Row 1: Sản phẩm yêu thích -->
+                    <LinearLayout
+                        android:id="@+id/ll_favorites"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_favorite"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Sản phẩm yêu thích"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:background="#E0E0E0" />
+
+                    <!-- Row 3: Điều khoản sử dụng -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_profile_terms"
+                            app:tint="#888888" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:text="Điều khoản sử dụng"
+                            android:textColor="@android:color/black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_right"
+                            app:tint="#AEAEAE" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!-- ================================== -->
+                <!-- (NEW) Log Out Button -->
+                <!-- ================================== -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/logoutTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Đăng xuất"
+                    android:textColor="#E53935"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+
+                <!-- Version Text (Updated to match screenshot) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:text="Gundam Shop phiên bản 1.X.X"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Order" />-->
+
+</FrameLayout>

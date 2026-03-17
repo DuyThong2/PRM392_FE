@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.staff.ChatsListFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/searchUserRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/searchUserEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_edittext"
+                android:layout_margin="10dp"
+                android:hint="Tìm tên khách hàng"
+                android:padding="10dp"
+                android:layout_toStartOf="@id/searchUserIb"/>
+
+            <ImageButton
+                android:id="@+id/searchUserIb"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_search_black"
+                app:tint="@color/colorPrimary"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatsListRV"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/searchUserRl"
+            tools:listitem="@layout/item_chat"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

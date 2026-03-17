@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/order_main_staff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    android:background="#F5F5F5"
+    android:padding="12dp">
+
+    <!-- Header -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp">
+
+        <!-- Nút Back -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Quay lại"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:tint="#000000" />
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chi tiết đơn hàng (Staff)"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <!-- Mã đơn hàng + Trạng thái + Nút chỉnh sửa -->
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Nhóm trái: Mã đơn + Ngày tạo -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvOrderCode"
+                android:text="Mã đơn hàng: SP.190BHVT.22.12.002714"
+                android:textSize="16sp"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvOrderDate"
+                android:text="Ngày tạo: 22/12/2025"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginTop="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- Text trạng thái (hiện mặc định) -->
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            android:text="Đã giao hàng"
+            android:textColor="#008000"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <!-- Spinner chọn trạng thái (ẩn mặc định) -->
+        <Spinner
+            android:id="@+id/spStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingHorizontal="10dp"
+            android:entries="@array/order_status_list" />
+
+        <!-- Nút chỉnh sửa -->
+        <ImageButton
+            android:id="@+id/btnEditStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Chỉnh sửa trạng thái"
+            android:src="@android:drawable/ic_menu_edit"
+            app:tint="#333333" />
+    </LinearLayout>
+
+    <!-- RecyclerView sản phẩm -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOrderItems"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Thông tin thanh toán -->
+    <include layout="@layout/include_payment_info" />
+
+    <!-- Thông tin khách hàng -->
+    <include layout="@layout/include_customer_info" />
+
+
+</LinearLayout>

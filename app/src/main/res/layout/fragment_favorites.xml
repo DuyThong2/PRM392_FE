@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        app:title="@string/favorites_title"
+        app:titleCentered="true"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/black"
+        android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="40dp">
+
+        <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:contentDescription="@string/favorites_empty_desc"
+            android:src="@drawable/ic_favorite_empty"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/tv_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/favorites_empty_message"
+            android:textColor="#FF333333"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp" />
+
+        <TextView
+            android:id="@+id/btn_shop_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/favorites_cta"
+            android:textColor="#D32F2F"
+            android:textSize="16sp"
+            android:padding="8dp" />
+    </LinearLayout>
+</LinearLayout>

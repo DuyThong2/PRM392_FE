@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Simple placeholder bubble with heart; replace with your PNG/artwork -->
+    <path android:fillColor="#FFEEEF" android:pathData="M100,20a60,60 0 1,0 0,120a60,60 0 1,0 0,-120z" />
+    <path android:fillColor="#D32F2F" android:pathData="M100,60c8,-12 28,-12 36,0 7,11 0,24 -18,41L100,140 82,101C64,84 57,71 64,60 72,48 92,48 100,60z" />
+</vector>
+
