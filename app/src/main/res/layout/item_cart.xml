@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- Product Image -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <ImageView
+                android:id="@+id/ivProductImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Product image"
+                tools:src="@drawable/ic_placeholder" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Product Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tên sản phẩm"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:text="RG 1/144 Strike Freedom Gundam" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0₫"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#E53E3E"
+                android:layout_marginTop="4dp"
+                tools:text="1,200,000₫" />
+
+            <!-- Quantity Controls -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageButton
+                    android:id="@+id/btnDecreaseQuantity"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/circle_button_bg"
+                    android:src="@drawable/ic_remove"
+                    android:contentDescription="Decrease quantity"
+                    android:scaleType="centerInside" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="8dp"
+                    tools:text="2" />
+
+                <ImageButton
+                    android:id="@+id/btnIncreaseQuantity"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/circle_button_bg"
+                    android:src="@drawable/ic_add"
+                    android:contentDescription="Increase quantity"
+                    android:scaleType="centerInside" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Actions -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical|end">
+
+            <!-- Total Price for this item -->
+            <TextView
+                android:id="@+id/tvTotalItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0₫"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E53E3E"
+                android:gravity="end"
+                tools:text="2,400,000₫" />
+
+            <!-- Delete Button -->
+            <ImageButton
+                android:id="@+id/btnRemoveItem"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/circle_button_bg"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="Remove item"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerInside"
+                app:tint="#FD0000" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
