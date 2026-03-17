@@ -20,6 +20,7 @@ import com.example.prm392fe.models.responses.CountResponse;
 import com.example.prm392fe.models.responses.LocationResponse;
 import com.example.prm392fe.models.responses.MessageResponse;
 import com.example.prm392fe.models.responses.OrderResponse;
+import com.example.prm392fe.models.responses.ProductResponse;
 import com.example.prm392fe.models.responses.UserResponse;
 
 import java.util.List;
@@ -126,6 +127,20 @@ public interface ApiService {
     @GET("api/conversations/list/{staffId}")
     Call<ApiResponse<List<ConversationResponse>>> getConversations(@Path("staffId") int id);
 
+    //-----------------------------------PRODUCT------------------------------------------
+    @GET("api/products")
+    @SkipAuth
+    Call<ApiResponse<PageResponse<ProductResponse>>> getProducts(
+            @Query("sort") String sort
+    );
 
+    @GET("api/products/{id}")
+    Call<ApiResponse<ProductResponse>> getProduct(@Path("id") int id);
+
+    @GET("api/products/category/{categoryId}")
+    Call<ApiResponse<PageResponse<ProductResponse>>> getProductsByCategory(
+            @Path("categoryId") int categoryId,
+            @Query("page") int page,
+            @Query("size") int size);
 
 }

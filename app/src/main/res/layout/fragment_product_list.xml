@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/FrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ProductListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <!-- Search + Cart -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false"
+        android:background="@color/brand_red"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:clipChildren="false">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetStart="0dp"
+            android:clipChildren="false"> <!-- QUAN TRỌNG: Loại bỏ padding mặc định -->
+
+            <!-- LINEAR LAYOUT CHÍNH chứa tất cả thành phần -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:clipChildren="false">
+
+                <!-- 1. Search Bar (Chiếm phần lớn không gian, dùng weight) -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search_bar_white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_search_black"
+                        app:tint="#757575" />
+
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@android:color/transparent"
+                        android:hint="Bạn muốn mua gì hôm nay?"
+                        android:textColor="#757575"
+                        android:textSize="14sp"
+                        android:singleLine="true"
+                        android:imeOptions="actionSearch" />
+
+                    <!-- Icon Filter -->
+                    <ImageView
+                        android:id="@+id/ivFilter"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_filter_list"
+                        app:tint="#757575"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+
+                <!-- 2. ImageView (Cart) -->
+                <FrameLayout
+                    android:id="@+id/cartIconContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="16dp"
+                    android:clipChildren="false">
+
+                    <ImageView
+                        android:id="@+id/ivCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_nav_cart"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvCartBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="-7dp"
+                        android:layout_marginEnd="-5dp"
+                        android:background="@drawable/bg_badge_red"
+                        android:elevation="2dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:text="9"
+                        android:textColor="@color/brand_red"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
+                </FrameLayout>
+
+                <!-- 3. ImageView (Chat) -->
+                <FrameLayout
+                    android:id="@+id/chatIconContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="16dp"
+                    android:clipChildren="false"> <!-- Padding để badge không bị cắt -->
+
+                    <!-- ICON CHAT -->
+                    <ImageView
+                        android:id="@+id/ivChat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_nav_chat"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvChatBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="-7dp"
+                        android:layout_marginEnd="-5dp"
+                        android:background="@drawable/bg_badge_red"
+                        android:elevation="2dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:text="9"
+                        android:textColor="@color/brand_red"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"/>
+
+                </FrameLayout>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Danh sách sản phẩm -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProducts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:clipToPadding="false" />
+
+</FrameLayout>

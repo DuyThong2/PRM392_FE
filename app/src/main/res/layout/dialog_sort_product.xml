@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/sortNameAsc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name A → Z"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/sortNameDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name Z → A"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/sortPriceAsc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Price Low → High"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/sortPriceDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Price High → Low"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
+</LinearLayout>
