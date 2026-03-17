@@ -10,6 +10,7 @@ import com.example.prm392fe.models.requests.CreateOrderRequest;
 import com.example.prm392fe.models.requests.DeleteAccountRequest;
 import com.example.prm392fe.models.requests.GoogleTokenRequest;
 import com.example.prm392fe.models.requests.LogoutRequest;
+import com.example.prm392fe.models.requests.PaymentRequest;
 import com.example.prm392fe.models.requests.ResetPasswordRequest;
 import com.example.prm392fe.models.requests.UpdateCartRequest;
 import com.example.prm392fe.models.requests.UpdateReadMessageRequest;
@@ -158,5 +159,9 @@ public interface ApiService {
     @DELETE("cart")
     Call<ApiResponse<Boolean>> removeFromCart(@Query("productId") int productId, @Query("userId") int userId);
 
-
+    //---------------------------------PAYMENT------------------------------------------
+    @POST("payment/vnpay-create-payment")
+    Call<ApiResponse<Map<String, String>>> createVNPAYPayment(@Body PaymentRequest request);
+    @POST("payment/momo-create-payment")
+    Call<ApiResponse<Map<String, String>>> createMomoPayment(@Body PaymentRequest request);
 }

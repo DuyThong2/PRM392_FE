@@ -21,17 +21,18 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.huyntd.superapp.gundamshop_mobilefe.R;
-import com.huyntd.superapp.gundamshop_mobilefe.adapter.CheckoutAdapter;
-import com.huyntd.superapp.gundamshop_mobilefe.models.request.CreateOrderRequest;
-import com.huyntd.superapp.gundamshop_mobilefe.models.request.OrderItemRequest;
-import com.huyntd.superapp.gundamshop_mobilefe.models.request.PaymentRequest;
-import com.huyntd.superapp.gundamshop_mobilefe.models.response.CartItemResponse;
-import com.huyntd.superapp.gundamshop_mobilefe.viewModel.CartViewModel;
-import com.huyntd.superapp.gundamshop_mobilefe.viewModel.OrderViewModel;
-import com.huyntd.superapp.gundamshop_mobilefe.viewModel.PaymentViewModel;
-import com.huyntd.superapp.gundamshop_mobilefe.viewModel.ProductDetailViewModel;
-import com.huyntd.superapp.gundamshop_mobilefe.viewModel.UserViewModel;
+
+import com.example.prm392fe.R;
+import com.example.prm392fe.adapter.CheckoutAdapter;
+import com.example.prm392fe.models.requests.CreateOrderRequest;
+import com.example.prm392fe.models.requests.OrderItemRequest;
+import com.example.prm392fe.models.requests.PaymentRequest;
+import com.example.prm392fe.models.responses.CartItemResponse;
+import com.example.prm392fe.viewModel.CartViewModel;
+import com.example.prm392fe.viewModel.OrderViewModel;
+import com.example.prm392fe.viewModel.PaymentViewModel;
+import com.example.prm392fe.viewModel.ProductDetailViewModel;
+import com.example.prm392fe.viewModel.UserViewModel;
 
 import java.util.ArrayList;
 
