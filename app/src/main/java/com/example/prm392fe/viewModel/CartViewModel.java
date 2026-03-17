@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.prm392fe.models.responses.CartResponse;
+import com.example.prm392fe.repositories.CartRepository;
 
 
 public class CartViewModel extends ViewModel {
@@ -23,7 +25,7 @@ public class CartViewModel extends ViewModel {
         return cartRepository.addToCart(userId, productId);
     }
 
-    public LiveData<CartResponse> updateCart(int userId, int cartId, java.util.List<com.huyntd.superapp.gundamshop_mobilefe.models.request.UpdateCartRequest.CartItemRequest> items) {
+    public LiveData<CartResponse> updateCart(int userId, int cartId, java.util.List<com.example.prm392fe.models.requests.UpdateCartRequest.CartItemRequest> items) {
         isLoading.setValue(true);
         return cartRepository.updateCart(userId, cartId, items);
     }

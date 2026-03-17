@@ -11,10 +11,12 @@ import com.example.prm392fe.models.requests.DeleteAccountRequest;
 import com.example.prm392fe.models.requests.GoogleTokenRequest;
 import com.example.prm392fe.models.requests.LogoutRequest;
 import com.example.prm392fe.models.requests.ResetPasswordRequest;
+import com.example.prm392fe.models.requests.UpdateCartRequest;
 import com.example.prm392fe.models.requests.UpdateReadMessageRequest;
 import com.example.prm392fe.models.requests.UserProfileUpdateRequest;
 import com.example.prm392fe.models.requests.UserRegisterRequest;
 import com.example.prm392fe.models.responses.AuthenticationResponse;
+import com.example.prm392fe.models.responses.CartResponse;
 import com.example.prm392fe.models.responses.ConversationResponse;
 import com.example.prm392fe.models.responses.CountResponse;
 import com.example.prm392fe.models.responses.LocationResponse;
@@ -142,5 +144,19 @@ public interface ApiService {
             @Path("categoryId") int categoryId,
             @Query("page") int page,
             @Query("size") int size);
+
+    //-----------------------------------CART-------------------------------------------
+    @GET("cart/user/{id}")
+    Call<ApiResponse<CartResponse>> getCartByUserId(@Path("id") int id);
+
+    @POST("cart")
+    Call<ApiResponse<Boolean>> addToCart(@Query("productId") int productId, @Query("userId") int userId);
+
+    @PUT("cart/user/{id}")
+    Call<ApiResponse<CartResponse>> updateCart(@Path("id") int userId, @Body UpdateCartRequest request);
+
+    @DELETE("cart")
+    Call<ApiResponse<Boolean>> removeFromCart(@Query("productId") int productId, @Query("userId") int userId);
+
 
 }

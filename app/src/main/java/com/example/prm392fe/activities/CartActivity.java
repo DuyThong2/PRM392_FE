@@ -19,9 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 import com.example.prm392fe.R;
 import com.example.prm392fe.SessionManager;
+import com.example.prm392fe.activities.CheckoutActivity;
+import com.example.prm392fe.activities.MainActivity;
 import com.example.prm392fe.adapter.CartAdapter;
+import com.example.prm392fe.models.responses.CartItemResponse;
 import com.example.prm392fe.models.responses.CartResponse;
 import com.example.prm392fe.repositories.NotificationRepository;
 import com.example.prm392fe.utils.AppStompClient;
@@ -222,11 +226,11 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
             int userId = Integer.parseInt(userIdStr);
 
             // Create updated items list
-            java.util.List<com.huyntd.superapp.gundamshop_mobilefe.models.request.UpdateCartRequest.CartItemRequest> items = new java.util.ArrayList<>();
+            java.util.List<com.example.prm392fe.models.requests.UpdateCartRequest.CartItemRequest> items = new java.util.ArrayList<>();
 
             for (CartItemResponse cartItem : currentCart.getItems()) {
                 int quantity = cartItem.getProductId() == item.getProductId() ? newQuantity : cartItem.getQuantity();
-                items.add(com.huyntd.superapp.gundamshop_mobilefe.models.request.UpdateCartRequest.CartItemRequest.builder()
+                items.add(com.example.prm392fe.models.requests.UpdateCartRequest.CartItemRequest.builder()
                         .productId(cartItem.getProductId())
                         .quantity(quantity)
                         .build());
@@ -290,4 +294,3 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
         loadCart();
     }
 }
-
