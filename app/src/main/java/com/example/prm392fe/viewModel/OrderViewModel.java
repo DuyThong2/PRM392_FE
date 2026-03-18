@@ -52,18 +52,18 @@ public class OrderViewModel extends ViewModel {
         });
     }
 
-    // LiveData cho tổng đơn hôm nay (không lọc status)
-    private final MutableLiveData<ApiResponse<PageResponse<OrderResponse>>> allOrdersToday = new MutableLiveData<>();
+    // LiveData cho tổng đơn hôm nay (không lọc status) - dùng endpoint /order/today/no-pagination
+    private final MutableLiveData<ApiResponse<List<OrderResponse>>> allOrdersToday = new MutableLiveData<>();
 
-    public LiveData<ApiResponse<PageResponse<OrderResponse>>> getAllOrdersToday() {
+    public LiveData<ApiResponse<List<OrderResponse>>> getAllOrdersToday() {
         return allOrdersToday;
     }
 
-    public void fetchAllOrdersToday(int page, int size, String sortBy, String sortDir) {
-        // Truyền empty string thay vì null để backend không bị NPE
-        OrderRepository.getInstance().getOrdersToday(page, size, sortBy, sortDir, "", new OrderRepository.RepositoryCallback<ApiResponse<PageResponse<OrderResponse>>>() {
+    public void fetchAllOrdersToday() {
+        // Không truyền status, không phân trang
+        OrderRepository.getInstance().getOrdersTodayNoPagination(new OrderRepository.RepositoryCallback<ApiResponse<List<OrderResponse>>>() {
             @Override
-            public void onSuccess(ApiResponse<PageResponse<OrderResponse>> result) {
+            public void onSuccess(ApiResponse<List<OrderResponse>> result) {
                 allOrdersToday.postValue(result);
             }
 

@@ -40,7 +40,7 @@ public class DashboardFragment extends Fragment {
 
         // Load dữ liệu từ API
         // 1. Tổng đơn hôm nay (không lọc status)
-        orderViewModel.fetchOrdersToday(0, 1000, "id", "desc", "PENDING");
+        orderViewModel.fetchAllOrdersToday();
         // 2. Đơn hàng PENDING hôm nay
         orderViewModel.fetchOrdersToday(0, 1000, "id", "desc", "PENDING");
 
@@ -56,9 +56,9 @@ public class DashboardFragment extends Fragment {
         // Quan sát tổng đơn hôm nay (không lọc status)
         orderViewModel.getAllOrdersToday().observe(getViewLifecycleOwner(), apiResponse -> {
             if (apiResponse != null && apiResponse.isSuccess()) {
-                PageResponse<OrderResponse> pageResponse = apiResponse.getResult();
-                if (pageResponse != null && pageResponse.getContent() != null) {
-                    binding.tvTodayOrders.setText("Tổng đơn hôm nay: " + pageResponse.getContent().size());
+                List<OrderResponse> orders = apiResponse.getResult();
+                if (orders != null) {
+                    binding.tvTodayOrders.setText("Tổng đơn hôm nay: " + orders.size());
                 } else {
                     binding.tvTodayOrders.setText("Tổng đơn hôm nay: 0");
                 }

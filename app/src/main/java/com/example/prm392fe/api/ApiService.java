@@ -11,6 +11,7 @@ import com.example.prm392fe.models.requests.LogoutRequest;
 import com.example.prm392fe.models.requests.PaymentRequest;
 import com.example.prm392fe.models.requests.ResetPasswordRequest;
 import com.example.prm392fe.models.requests.UpdateCartRequest;
+import com.example.prm392fe.models.requests.UpdateOrderRequest;
 import com.example.prm392fe.models.requests.UserProfileUpdateRequest;
 import com.example.prm392fe.models.requests.UserRegisterRequest;
 import com.example.prm392fe.models.responses.AuthenticationResponse;
@@ -97,6 +98,9 @@ public interface ApiService {
     @GET("order/{id}")
     Call<ApiResponse<OrderResponse>> getOrderDetail(@Path("id") int id);
 
+    @GET("order/today/no-pagination")
+    Call<ApiResponse<List<OrderResponse>>> getOrdersTodayNoPagination();
+
     @GET("order")
     Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersToday(
             @Query("page") int page,
@@ -105,10 +109,18 @@ public interface ApiService {
             @Query("sortDir") String sortDir,
             @Query("status") String status
     );
-    @PUT("order/{id}/status")
+
+// Update status - endpoint mới với @RequestParam
+    @PUT("order/status")
     Call<ApiResponse<OrderResponse>> updateOrderStatus(
-            @Path("id") int id,
+            @Query("id") int id,
             @Query("status") String status
+    );
+
+    @PUT("order/{id}")
+    Call<ApiResponse<OrderResponse>> updateOrder(
+            @Path("id") int id,
+            @Body UpdateOrderRequest request
     );
 
     @POST("order")
