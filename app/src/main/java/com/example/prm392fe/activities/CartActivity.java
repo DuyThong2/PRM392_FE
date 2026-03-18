@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.prm392fe.R;
 import com.example.prm392fe.SessionManager;
 import com.example.prm392fe.activities.CheckoutActivity;
@@ -27,8 +26,6 @@ import com.example.prm392fe.activities.MainActivity;
 import com.example.prm392fe.adapter.CartAdapter;
 import com.example.prm392fe.models.responses.CartItemResponse;
 import com.example.prm392fe.models.responses.CartResponse;
-import com.example.prm392fe.repositories.NotificationRepository;
-import com.example.prm392fe.utils.AppStompClient;
 import com.example.prm392fe.viewModel.CartViewModel;
 
 import java.text.DecimalFormat;
@@ -51,15 +48,11 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     private ProgressBar progressBar;
 
     private CartResponse currentCart;
-    private NotificationRepository notificationRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        AppStompClient stompClient = AppStompClient.getInstance(SessionManager.getInstance(this).getAuthToken());
-        String userId = SessionManager.getInstance(this).getUserId();
-        notificationRepository = new NotificationRepository(stompClient, userId, this);
 
         // Đảm bảo layout tránh vùng camera và status bar
         View rootView = findViewById(R.id.main);
@@ -95,7 +88,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnCar
     }
 
     private void setupRecyclerView() {
-        cartAdapter = new CartAdapter(this, notificationRepository);
+        cartAdapter = new CartAdapter(this);
         cartAdapter.setOnCartItemListener(this);
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
         rvCartItems.setAdapter(cartAdapter);

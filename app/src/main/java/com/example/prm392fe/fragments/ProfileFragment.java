@@ -29,8 +29,7 @@ import com.example.prm392fe.api.ApiService;
 import com.example.prm392fe.models.ApiResponse;
 import com.example.prm392fe.models.requests.LogoutRequest;
 import com.example.prm392fe.models.responses.OrderResponse;
-import com.example.prm392fe.utils.AppStompClient;
-import com.example.prm392fe.utils.WebSocketService;
+
 import com.example.prm392fe.viewModel.UserViewModel;
 
 import lombok.AccessLevel;
@@ -168,8 +167,7 @@ public class ProfileFragment extends Fragment {
                             // Trường hợp THÀNH CÔNG (HTTP 200)
                             Toast.makeText(getActivity(), "Đang đăng xuất", Toast.LENGTH_SHORT).show();
                             ApiClient.clearApiClient();
-                            AppStompClient.clearInstance();
-                            getContext().stopService(new Intent(getContext(), WebSocketService.class));
+
                             SessionManager.getInstance(getActivity()).clearSession();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
@@ -205,8 +203,5 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void stopWebSocketService() {
-        Intent serviceIntent = new Intent(requireContext(), WebSocketService.class);
-        requireContext().stopService(serviceIntent);
-    }
+
 }

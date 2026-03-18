@@ -30,20 +30,15 @@ import com.example.prm392fe.fragments.MapsFragment;
 import com.example.prm392fe.fragments.PersonalInfoFragment;
 import com.example.prm392fe.fragments.ProductListFragment;
 import com.example.prm392fe.fragments.ProfileFragment;
-import com.example.prm392fe.fragments.staff.ChatsListFragment;
 import com.example.prm392fe.fragments.staff.DashboardFragment;
 import com.example.prm392fe.fragments.staff.QuickOrderFragment;
-import com.example.prm392fe.utils.AppStompClient;
 import com.example.prm392fe.utils.NotificationUtils;
-import com.example.prm392fe.utils.WebSocketService;
 import com.google.android.material.navigation.NavigationBarView;
-
 
 public class MainActivity extends AppCompatActivity {
     //View binding
     private ActivityMainBinding binding;
     private SessionManager sessionManager;
-    private AppStompClient stompClient;
 
     private String userRole;
 
@@ -69,52 +64,54 @@ public class MainActivity extends AppCompatActivity {
         //activity_main.xml = ActivityMainBinding
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         //Chú ý dòng này!!!!! nếu dùng binding
-        //setContentView(R.layout.activity_main);
         setContentView(binding.getRoot());
-        sessionManager = SessionManager.getInstance(getApplicationContext());
-        // Cho phép layout phủ dưới status bar (fix cho Pixel, Android 12+)
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.brand_red)); // hoặc mã hex
 
-        // --- Tránh vùng camera (notch) ---
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.statusBars());
-            v.setPadding(0, bars.top, 0, 0);
-            return insets;
-        });
+        // Khởi tạo SessionManager
+        sessionManager = SessionManager.getInstance(this);
 
-        sessionManager = SessionManager.getInstance(MainActivity.this);
+        // Kiểm tra xem người dùng đã đăng nhập chưa
         if (!sessionManager.isLoggedIn()) {
             startLoginOptionsActivity();
-        } else {
-            // Trường hợp tắt app mà chưa logout thì sessionManager vẫn lưu token tuy nhiên ApiClient đã xóa token
-            // --> khi mà vào lại app ---> vào thẳng Home ko thông qua login (do sessionManager đã có token)
-            // Mà ApiClient chỉ được gán token thông qua login --> bị lỗi 1 số api cần bearer token
-            ApiClient.setToken(SessionManager.getInstance(MainActivity.this).getAuthToken());
-            userRole = sessionManager.getRole();
-
-            // BẮT ĐẦU SERVICE để nó quản lý việc kết nối và lắng nghe
-            startWebSocketService();
-            NotificationUtils.createNotificationChannels(this);
-            askNotificationPermission();
-
-            System.out.println("Start hereeeee");
-            setupBottomNavigationForRole(userRole);
+            finish();
+            return; // Dừng lại, không thực hiện các bước sau
         }
-    }
 
-    private void askNotificationPermission() {
-        // Chỉ áp dụng cho Android 13 (API 33) trở lên
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // Kiểm tra xem quyền đã được cấp hay chưa
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                // Quyền đã được cấp, không cần làm gì thêm.
-            } else {
-                // Quyền chưa được cấp, tiến hành hỏi người dùng.
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+        // Lấy vai trò của người dùng từ Intent
+        Intent intent = getIntent();
+        if (intent != null) {
+            userRole = intent.getStringExtra("USER_ROLE");
+        }
+
+        userRole = sessionManager.getRole();
+        boolean isStaff = (userRole != null && (userRole.equals("STAFF") || userRole.equals("ADMIN")));
+
+        // 2. Xin quyền thông báo (chỉ trên Android 13 trở lên)
+        // Chỉ xin quyền nếu là STAFF
+        if (isStaff) {
+            // Android 13 (API 33) trở lên
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                // Kiểm tra xem quyền đã được cấp hay chưa
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    // Quyền đã được cấp, không cần làm gì thêm.
+                } else {
+                    // Quyền chưa được cấp, tiến hành hỏi người dùng.
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+                }
             }
         }
+
+        // Thiết lập BottomNavigation theo vai trò
+        setupBottomNavigationForRole(userRole);
+
+        // ✅ Đảm bảo layout tránh vùng camera và status bar
+        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+            // Lấy kích thước phần đệm của hệ thống (status bar, navigation bar)
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Áp dụng padding để tránh nội dung bị che khuất
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
     /**
@@ -148,24 +145,20 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_orders) {
                     showQuickOrderFragment();
                     return true;
-                } else if (id == R.id.nav_chat) {
-                    showChatsListFragment();
-                    return true;
                 } else if (id == R.id.nav_profile) {
                     showProfileFragment();
                 }
-//                } else if (id == R.id.nav_search) {
-//                    showProductSearchFragment();
-//                    return true;
-//                } else if (id == R.id.nav_notify) {
-//                    showNotificationsFragment();
-//                    return true;
-//                }
+//            } else if (id == R.id.nav_search) {
+//                showProductSearchFragment();
+//                return true;
+//            } else if (id == R.id.nav_notify) {
+//                showNotificationsFragment();
+//                return true;
+//            }
                 return false;
             }
         });
     }
-
 
     /**
      * Xử lý navigation cho CUSTOMER (logic cũ giữ nguyên)
@@ -179,8 +172,6 @@ public class MainActivity extends AppCompatActivity {
                     showProductListFragment();
                 } else if (id == R.id.nav_map) {
                     showMapsFragment();
-                } else if (id == R.id.nav_notification) {
-                    showFavoriteListFragment(); // hoặc màn hình thông báo
                 } else if (id == R.id.nav_profile) {
                     showProfileFragment();
                 }
@@ -249,13 +240,6 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
 
-    private void startWebSocketService() {
-        Intent serviceIntent = new Intent(this, WebSocketService.class);
-        // Sử dụng startForegroundService để tuân thủ quy tắc Android O+
-        // Service sẽ ngay lập tức gọi onCreate() rồi đến onStartCommand()
-        ContextCompat.startForegroundService(this, serviceIntent);
-    }
-
     // ----------------- STAFF FRAGMENTS -----------------
     private void showDashboardFragment() {
         replaceFragment(new DashboardFragment(), "DashboardFragment");
@@ -263,10 +247,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showQuickOrderFragment() {
         replaceFragment(new QuickOrderFragment(), "QuickOrderFragment");
-    }
-
-    private void showChatsListFragment() {
-        replaceFragment(new ChatsListFragment(), "ChatsListFragment");
     }
 
     @Override

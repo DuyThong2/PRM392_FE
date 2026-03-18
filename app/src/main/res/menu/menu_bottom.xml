@@ -1,40 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--    <item android:id="@+id/item_home"-->
+<!-- <item android:id="@+id/item_home"-->
 <!--    android:title="Home"-->
 <!--    android:icon="@drawable/home_black"/>-->
 
-<!--    <item android:id="@+id/item_chats"-->
-<!--        android:title="Chats"-->
-<!--        android:icon="@drawable/chat_black"/>-->
+<!-- <item android:id="@+id/item_chats"-->
+<!--    android:title="Chats"-->
+<!--    android:icon="@drawable/chat_black"/>-->
 
-<!--    <item android:id="@+id/item_favorite"-->
-<!--        android:title="Favorites"-->
-<!--        android:icon="@drawable/favorite_no_black"/>-->
+<!-- <item android:id="@+id/item_favorite"-->
+<!--    android:title="Favorites"-->
+<!--    android:icon="@drawable/favorite_no_black"/>-->
 
-<!--    <item android:id="@+id/item_profile"-->
-<!--        android:title="Profile"-->
-<!--        android:icon="@drawable/ic_person_black"/>-->
+<!-- <item android:id="@+id/item_profile"-->
+<!--    android:title="Profile"-->
+<!--    android:icon="@drawable/ic_person_black"/>-->
 
-    <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_nav_home"
-        android:title="Trang chủ" />
+ <item
+    android:id="@+id/nav_home"
+    android:icon="@drawable/ic_nav_home"
+    android:title="Trang chủ" />
 
-    <item
-        android:id="@+id/nav_map"
-        android:icon="@drawable/ic_nav_map"
-        android:title="Cửa hàng" />
+ <item
+    android:id="@+id/nav_map"
+    android:icon="@drawable/ic_nav_map"
+    android:title="Cửa hàng" />
 
-    <item
-        android:id="@+id/nav_notification"
-        android:icon="@drawable/ic_nav_notification"
-        android:title="Thông báo" />
-
-    <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/ic_nav_account"
-        android:title="Tài khoản" />
+ <item
+    android:id="@+id/nav_profile"
+    android:icon="@drawable/ic_nav_account"
+    android:title="Tài khoản" />
 
 </menu>

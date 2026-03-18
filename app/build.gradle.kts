@@ -75,16 +75,6 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 
     // Glide annotation processor for generated API (keep with annotationProcessor since kapt not applied)
-    // WebSocket (Java-WebSocket là transport layer)
-    implementation("org.java-websocket:Java-WebSocket:1.5.3")
-
-    // STOMP client for Android
-    // NOTE: Thư viện này dựa trên RxJava2, nên cần thêm RxJava
-    implementation("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
-
-    // RxJava 2 dependencies (Cần thiết cho StompProtocolAndroid)
-    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     // Dùng cho OpenStreetMap
     implementation("org.osmdroid:osmdroid-android:6.1.18")
