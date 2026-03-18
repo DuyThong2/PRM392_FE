@@ -116,5 +116,8 @@ public class SessionManager {
     public void clearSession() {
         editor.clear();
         editor.apply();
+        this.userId = null;
+        this.role = null;
+        ApiClient.clearApiClient(); // Xóa token trong ApiClient
     }
 }

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -19,13 +20,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.prm392fe.R;
+import com.example.prm392fe.SessionManager;
 import com.example.prm392fe.adapter.OrdersAdapter;
+import com.example.prm392fe.models.ApiResponse;
+import com.example.prm392fe.models.PageResponse;
 import com.example.prm392fe.models.responses.OrderResponse;
 import com.example.prm392fe.viewModel.OrderViewModel;
 import com.example.prm392fe.viewModel.UserViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 public class OrderHistoryActivity extends AppCompatActivity {
 
@@ -74,47 +78,48 @@ public class OrderHistoryActivity extends AppCompatActivity {
         userViewModel.getInfo().observe(this, userResponse -> {
             if (userResponse != null) {
                 Glide.with(this)
-                        .load("https://i.pinimg.com/736x/30/a8/49/30a8490ff409df33d1e23702cf2c4aa8.jpg")
-                        .override(300, 300) // fix size 200x200 pixel
-                        .centerCrop()       // cắt giữa hình để không méo
-                        .into(imgAvatar);
+                    .load("https://i.pinimg.com/736x/30/a8/49/30a8490ff409df33d1e23702cf2c4aa8.jpg")
+                    .override(300, 300) // fix size 200x200 pixel
+                    .centerCrop() // cắt giữa hình để không méo
+                    .into(imgAvatar);
 
                 tvName.setText(userResponse.getFullName());
                 tvPhone.setText(userResponse.getPhone());
                 userId = userResponse.getId();
 
-                // 2. Api lấy tổng tiền + đơn hàng
-                orderViewModel.getOrdersByUserId(userId).observe(this, orders -> {
-                    if (orders != null && !orders.isEmpty()) {
-                        tvOrdersCount.setText(String.valueOf(orders.size()));
-
-                        // ✅ Tính tổng tiền (nếu có field totalPrice trong OrderResponse)
-                        double total = 0;
-                        for (OrderResponse o : orders) {
-                            if (o.getStatus().equals("DELIVERED")) {
-                                total += o.getTotalPrice();
+                // 🔹 Kiểm tra role của user
+                String role = SessionManager.getInstance(this).getRole();
+                if (role != null && role.equals("ADMIN")) {
+                    // 🔹 ADMIN: Gọi getOrdersToday() (không lọc userId)
+                    orderViewModel.fetchOrdersToday(0, 10, "createdAt", "desc", null);
+                    orderViewModel.getOrdersToday().observe(this, apiResponse -> {
+                        if (apiResponse != null && apiResponse.isSuccess()) {
+                            PageResponse<OrderResponse> pageResponse = apiResponse.getResult();
+                            if (pageResponse != null && pageResponse.getContent() != null) {
+                                List<OrderResponse> orders = pageResponse.getContent();
+                                updateUI(orders);
+                                updateTotalAndCount(orders);
                             }
+                        } else {
+                            Toast.makeText(this, "Không thể tải đơn hàng", Toast.LENGTH_SHORT).show();
+                            updateUI(new ArrayList<>());
+                            updateTotalAndCount(new ArrayList<>());
                         }
-                        tvTotal.setText(String.format("%,.0fđ", total));
-                    } else {
-                        tvOrdersCount.setText("0");
-                tvTotal.setText("0đ");
-                Log.d("OrderHistory", "Không có đơn hàng nào.");
-                    }
-                });
-
-                // 3. Api lấy lịch sử mua hàng
-                // ===== Gắn listener =====
-                setupListeners();
-
-                //Gắn các button để lọc status
-                orderViewModel.getOrdersByUserId(userId).observe(this, orders -> {
-                    updateUI(orders);
-                });
-
+                    });
+                } else {
+                    // 🔹 USER: Gọi getOrdersByUserId(userId)
+                    orderViewModel.getOrdersByUserId(userId).observe(this, orders -> {
+                        if (orders != null) {
+                            updateUI(orders);
+                            updateTotalAndCount(orders);
+                        }
+                    });
+                }
             }
         });
 
+        // Gắn các button để lọc status
+        setupListeners();
     }
 
     private void mappingViews() {
@@ -129,8 +134,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
         btnPending = findViewById(R.id.btn_pending);
         btnProcessing = findViewById(R.id.btn_processing);
         btnShipped = findViewById(R.id.btn_shipped);
-        btnCancelled = findViewById(R.id.btn_cancelled);
         btnDelivered = findViewById(R.id.btn_delivered);
+        btnCancelled = findViewById(R.id.btn_cancelled);
         btnRefunded = findViewById(R.id.btn_refunded);
         tvEmpty = findViewById(R.id.tv_empty);
     }
@@ -185,16 +190,50 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     //----------------------Load API---------------------------
     private void loadOrdersByStatus(int userId, @Nullable String status) {
-        if (status == null) {
-            orderViewModel.getOrdersByUserId(userId)
-                    .observe(this, orders -> {
-                        updateUI(orders);
-                    });
+        String role = SessionManager.getInstance(this).getRole();
+        if (role != null && role.equals("ADMIN")) {
+            // 🔹 ADMIN: Gọi getOrdersToday() với status
+            orderViewModel.fetchOrdersToday(0, 10, "createdAt", "desc", status);
+            orderViewModel.getOrdersToday().observe(this, apiResponse -> {
+                if (apiResponse != null && apiResponse.isSuccess()) {
+                    PageResponse<OrderResponse> pageResponse = apiResponse.getResult();
+                    if (pageResponse != null && pageResponse.getContent() != null) {
+                        updateUI(pageResponse.getContent());
+                    }
+                } else {
+                    Toast.makeText(this, "Không thể tải đơn hàng", Toast.LENGTH_SHORT).show();
+                    updateUI(new ArrayList<>());
+                }
+            });
         } else {
-            orderViewModel.getOrdersByStatus(userId, status)
-                    .observe(this, orders -> {
-                        updateUI(orders);
-                    });
+            // 🔹 USER: Gọi getOrdersByStatus(userId, status)
+            if (status == null) {
+                orderViewModel.getOrdersByUserId(userId)
+                    .observe(this, this::updateUI);
+            } else {
+                orderViewModel.getOrdersByStatus(userId, status)
+                    .observe(this, this::updateUI);
+            }
+        }
+    }
+
+    //----------------------Tính tổng tiền và số đơn----------------------
+    private void updateTotalAndCount(List<OrderResponse> orders) {
+        if (orders != null && !orders.isEmpty()) {
+            tvOrdersCount.setText(String.valueOf(orders.size()));
+
+            // ✅ Tính tổng tiền (nếu có field totalPrice trong OrderResponse)
+            double total = 0;
+            for (OrderResponse o : orders) {
+                if (o.getStatus().equals("DELIVERED")) {
+                    total += o.getTotalPrice();
+                }
+            }
+            tvTotal.setText(String.format("%,.0fđ", total));
+        } else {
+            tvOrdersCount.setText("0");
+            tvTotal.setText("0đ");
+            Log.d("OrderHistory", "Không có đơn hàng nào.");
         }
     }
 

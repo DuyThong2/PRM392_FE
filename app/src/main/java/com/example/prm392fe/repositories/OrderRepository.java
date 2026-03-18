@@ -11,6 +11,7 @@ import com.example.prm392fe.api.ApiClient;
 import com.example.prm392fe.models.ApiResponse;
 import com.example.prm392fe.models.PageResponse;
 import com.example.prm392fe.models.requests.CreateOrderRequest;
+import com.example.prm392fe.models.requests.UpdateOrderRequest;
 import com.example.prm392fe.models.responses.OrderResponse;
 
 import java.util.Collections;
@@ -155,7 +156,26 @@ public class OrderRepository {
     }
 
 
-    public void getOrdersToday(
+    public void getOrdersTodayNoPagination(RepositoryCallback<ApiResponse<List<OrderResponse>>> callback) {
+        Call<ApiResponse<List<OrderResponse>>> call = ApiClient.getApiService().getOrdersTodayNoPagination();
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<OrderResponse>>> call, Response<ApiResponse<List<OrderResponse>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Response unsuccessful or null body");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<OrderResponse>>> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
+
+public void getOrdersToday(
             int page,
             int size,
             String sortBy,
@@ -181,7 +201,6 @@ public class OrderRepository {
             }
         });
 
-
     }
 
     public void updateOrderStatus(
@@ -195,10 +214,18 @@ public class OrderRepository {
             public void onResponse(Call<ApiResponse<OrderResponse>> call,
                                    Response<ApiResponse<OrderResponse>> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    Log.e("OrderRepository", "✅ Order status updated: " + new Gson().toJson(response.body()));
+                    Log.d("OrderRepository", "✅ Order status updated: " + new Gson().toJson(response.body()));
                     callback.onSuccess(response.body().getResult());
                 } else {
-                    callback.onError("Response unsuccessful or null body");
+                    String errorMessage = "Response unsuccessful or null body";
+                    try {
+                        if (response.errorBody() != null) {
+                            errorMessage = response.errorBody().string();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    callback.onError(errorMessage);
                 }
             }
 

@@ -108,7 +108,7 @@ public class OrderDetailStaffActivity extends AppCompatActivity {
                 String enumStatus = String.valueOf(StatusMapper.toEnum(selectedVN)); // Chuyển về enum server cần
 
                 // Cập nhật chi tiết order qua OrderViewModel
-                quickOrderViewModel.updateOrderStatus(orderId, OrderStatus.valueOf(enumStatus));
+                quickOrderViewModel.updateOrderStatus(orderId, StatusMapper.toEnum(selectedVN));
 
                 // Đồng thời refresh danh sách tổng quát hôm nay
                 quickOrderViewModel.refresh();

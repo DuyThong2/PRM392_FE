@@ -1,7 +1,5 @@
 package com.example.prm392fe.api;
 
-
-
 import com.example.prm392fe.models.ApiResponse;
 import com.example.prm392fe.models.PageResponse;
 import com.example.prm392fe.models.requests.AuthenticationRequest;
@@ -13,15 +11,13 @@ import com.example.prm392fe.models.requests.LogoutRequest;
 import com.example.prm392fe.models.requests.PaymentRequest;
 import com.example.prm392fe.models.requests.ResetPasswordRequest;
 import com.example.prm392fe.models.requests.UpdateCartRequest;
-import com.example.prm392fe.models.requests.UpdateReadMessageRequest;
+import com.example.prm392fe.models.requests.UpdateOrderRequest;
 import com.example.prm392fe.models.requests.UserProfileUpdateRequest;
 import com.example.prm392fe.models.requests.UserRegisterRequest;
 import com.example.prm392fe.models.responses.AuthenticationResponse;
 import com.example.prm392fe.models.responses.CartResponse;
-import com.example.prm392fe.models.responses.ConversationResponse;
 import com.example.prm392fe.models.responses.CountResponse;
 import com.example.prm392fe.models.responses.LocationResponse;
-import com.example.prm392fe.models.responses.MessageResponse;
 import com.example.prm392fe.models.responses.OrderResponse;
 import com.example.prm392fe.models.responses.ProductResponse;
 import com.example.prm392fe.models.responses.UserResponse;
@@ -102,7 +98,10 @@ public interface ApiService {
     @GET("order/{id}")
     Call<ApiResponse<OrderResponse>> getOrderDetail(@Path("id") int id);
 
-    @GET("order/today")
+    @GET("order/today/no-pagination")
+    Call<ApiResponse<List<OrderResponse>>> getOrdersTodayNoPagination();
+
+    @GET("order")
     Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersToday(
             @Query("page") int page,
             @Query("size") int size,
@@ -110,10 +109,18 @@ public interface ApiService {
             @Query("sortDir") String sortDir,
             @Query("status") String status
     );
-    @PUT("order/{id}/status")
+
+// Update status - endpoint mới với @RequestParam
+    @PUT("order/status")
     Call<ApiResponse<OrderResponse>> updateOrderStatus(
-            @Path("id") int id,
+            @Query("id") int id,
             @Query("status") String status
+    );
+
+    @PUT("order/{id}")
+    Call<ApiResponse<OrderResponse>> updateOrder(
+            @Path("id") int id,
+            @Body UpdateOrderRequest request
     );
 
     @POST("order")
@@ -141,14 +148,7 @@ public interface ApiService {
     @GET("cart/total-quantity/{customerId}")
     Call<ApiResponse<CountResponse>> totalItemsQuantityByCustomerId(@Path("customerId") int customerId);
 
-    // --------------------------------CONVERSATION-------------------------------------
-    // @GET("api/conversations")
-    // Call<ApiResponse<ConversationResponse>> getConversations();
-
-
-
-
-    //    -------------------------------DASHBOARD--------------------------------------
+    // -------------------------------DASHBOARD--------------------------------------
     @GET("/order/todays/count")
     Call<ApiResponse<Long>> getTodaysOrderCount();
 
@@ -157,21 +157,6 @@ public interface ApiService {
 
     @GET("/api/products/low-stock-count")
     Call<Long> getLowStockCount(@Query("threshold") int threshold);
-    @GET("api/conversations/list/{staffId}")
-    Call<ApiResponse<List<ConversationResponse>>> getConversations(@Path("staffId") int id);
-
-    @GET("api/conversations/{customerId}")
-    Call<ApiResponse<ConversationResponse>> getConversationByCustomerId(@Path("customerId") int id);
-
-    // ----------------------------------MESSAGE----------------------------------------
-    @GET("api/messages/{customerId}")
-    Call<ApiResponse<List<MessageResponse>>> getMessages(@Path("customerId") int id);
-
-    @GET("api/messages/unread/{receiverId}")
-    Call<ApiResponse<CountResponse>> countUnreadMessages(@Path("receiverId") int id);
-
-    @PUT("api/messages/read")
-    Call<ApiResponse<CountResponse>> updateReadMessages(@Body UpdateReadMessageRequest request);
 
     // ----------------------------------LOCATION---------------------------------------
     @GET("api/locations")
