@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.MapsFragment">
+
+    <!-- 1. MapView chiếm toàn bộ không gian -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- 2. Khung chứa Search Bar (Sử dụng CardView để tạo hiệu ứng bo tròn và đổ bóng) -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:gravity="center_vertical">
+
+            <!-- Biểu tượng Định vị (Giống biểu tượng Google Maps) -->
+            <!-- Bạn nên thay thế drawable bằng biểu tượng vector của riêng mình (ic_map_pin) -->
+            <ImageView
+                android:id="@+id/img_map_pin"
+                android:layout_width="19dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Biểu tượng định vị"/>
+<!--                android:src="@drawable/ic_map_pin"-->
+<!--                android:tint="@color/design_default_color_primary" -->
+
+            <!-- Thanh nhập liệu (EditText) -->
+            <EditText
+                android:id="@+id/edit_text_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Tìm kiếm ở đây"
+                android:background="@android:color/transparent"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:textSize="16sp"/>
+
+            <!-- Nút Profile/Tìm kiếm (trong trường hợp này chúng ta tái sử dụng nút tìm kiếm) -->
+            <!-- Nếu bạn không có hình ảnh Profile, bạn có thể dùng lại nút tìm kiếm cũ -->
+            <ImageButton
+                android:id="@+id/btn_search_location"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_search_black"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Tìm kiếm"
+                android:scaleType="centerInside"/>
+
+            <!-- Nút Microphone (Tùy chọn) -->
+            <ImageButton
+                android:id="@+id/btn_center_location"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_current_position_black"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Vị trí của tôi"
+                android:layout_marginHorizontal="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/locationRV"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_gravity="bottom"
+        android:layout_above="@id/view1"
+        android:layout_below="@id/toolbarRL"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        tools:listitem="@layout/item_location"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+</FrameLayout>

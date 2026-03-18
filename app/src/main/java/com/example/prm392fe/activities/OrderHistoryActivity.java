@@ -97,7 +97,9 @@ public class OrderHistoryActivity extends AppCompatActivity {
                         }
                         tvTotal.setText(String.format("%,.0fđ", total));
                     } else {
-                        Log.d("OrderHistory", "Không có đơn hàng nào.");
+                        tvOrdersCount.setText("0");
+                tvTotal.setText("0đ");
+                Log.d("OrderHistory", "Không có đơn hàng nào.");
                     }
                 });
 

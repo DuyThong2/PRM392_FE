@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="128dp"
+    android:height="128dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Nền xám nhạt -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M0,0h24v24H0z" />
+
+    <!-- Biểu tượng ảnh bị lỗi -->
+    <path
+        android:fillColor="#9E9E9E"
+        android:pathData="M21,19V5c0,-1.1 -0.9,-2 -2,-2H5c-1.1,0 -2,0.9 -2,2v14c0,1.1 0.9,2 2,2h14c1.1,0 2,-0.9 2,-2zM8.9,13.98l2.1,2.53l3,-3.76L19,19H5l3.9,-5.02zM5,5h14v7.58l-2.62,-3.13L12,15l-2.1,-2.53L5,17.2V5z" />
+
+    <!-- Dấu X -->
+    <path
+        android:fillColor="#BDBDBD"
+        android:pathData="M6,6l12,12M6,18L18,6"
+        android:strokeWidth="1"
+        android:strokeColor="#BDBDBD" />
+</vector>

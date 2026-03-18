@@ -23,7 +23,7 @@ public class AppStompClient {
     private static AppStompClient instance;
     static final String TAG = "CHAT_STOMP_CLIENT";
     final String jwtToken;
-    final String serverUrl = "ws://172.20.10.5:8080/ws-native";
+    final String serverUrl = "ws://192.168.10.6:8080/ws-native";
 
     // Phải thêm maven { url = uri("https://jitpack.io") } trong settings.gradle.kts (Project Settings)
     // dependencyResolutionManagement {

@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     // này check ipconfig -> thay localhost = IPv4 Address của Wireless LAN adapter Wi-Fi
-    private static final String BASE_URL = "http://172.20.10.5:8080/";
+    private static final String BASE_URL = "http://192.168.10.6:8080";
 
     // Biến instance của Retrofit (ban đầu là null) (1)
     private static Retrofit retrofit = null;

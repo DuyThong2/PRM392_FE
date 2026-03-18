@@ -25,6 +25,14 @@ import com.example.prm392fe.R;
 import com.example.prm392fe.SessionManager;
 import com.example.prm392fe.api.ApiClient;
 import com.example.prm392fe.databinding.ActivityMainBinding;
+import com.example.prm392fe.fragments.FavoriteListFragment;
+import com.example.prm392fe.fragments.MapsFragment;
+import com.example.prm392fe.fragments.PersonalInfoFragment;
+import com.example.prm392fe.fragments.ProductListFragment;
+import com.example.prm392fe.fragments.ProfileFragment;
+import com.example.prm392fe.fragments.staff.ChatsListFragment;
+import com.example.prm392fe.fragments.staff.DashboardFragment;
+import com.example.prm392fe.fragments.staff.QuickOrderFragment;
 import com.example.prm392fe.utils.AppStompClient;
 import com.example.prm392fe.utils.NotificationUtils;
 import com.example.prm392fe.utils.WebSocketService;
@@ -115,11 +123,13 @@ public class MainActivity extends AppCompatActivity {
     private void setupBottomNavigationForRole(String role) {
         binding.bottomNavigation.getMenu().clear();
 
-        if ("STAFF".equalsIgnoreCase(role)) {
+        if ("STAFF".equalsIgnoreCase(role) || "ADMIN".equalsIgnoreCase(role)) {
             binding.bottomNavigation.inflateMenu(R.menu.menu_staff_bottom);
+            showDashboardFragment(); // mặc định staff mở Dashboard
             setupStaffNavigation();
         } else {
             binding.bottomNavigation.inflateMenu(R.menu.menu_bottom);
+            showProductListFragment(); // mặc định customer mở danh sách sản phẩm
             setupCustomerNavigation();
         }
     }
@@ -132,7 +142,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
+                if (id == R.id.nav_home) {
+                    showDashboardFragment();
+                    return true;
+                } else if (id == R.id.nav_orders) {
+                    showQuickOrderFragment();
+                    return true;
+                } else if (id == R.id.nav_chat) {
+                    showChatsListFragment();
+                    return true;
+                } else if (id == R.id.nav_profile) {
+                    showProfileFragment();
+                }
+//                } else if (id == R.id.nav_search) {
+//                    showProductSearchFragment();
+//                    return true;
+//                } else if (id == R.id.nav_notify) {
+//                    showNotificationsFragment();
+//                    return true;
+//                }
                 return false;
             }
         });
@@ -147,14 +175,68 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-
+                if (id == R.id.nav_home) {
+                    showProductListFragment();
+                } else if (id == R.id.nav_map) {
+                    showMapsFragment();
+                } else if (id == R.id.nav_notification) {
+                    showFavoriteListFragment(); // hoặc màn hình thông báo
+                } else if (id == R.id.nav_profile) {
+                    showProfileFragment();
+                }
                 return true;
             }
         });
     }
 
     // ----------------- CUSTOMER FRAGMENTS -----------------
+    private void showProductListFragment() {
+        // Kiểm tra nếu fragment đã tồn tại, không cần tạo lại
+        Fragment existingFragment = getSupportFragmentManager().findFragmentByTag("ProductListFragment");
 
+        if (existingFragment == null) {
+            ProductListFragment productListFragment = new ProductListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(binding.fragmentsFL.getId(), productListFragment, "ProductListFragment")
+                    .commit();
+        } else {
+            // Nếu fragment đã có (VD: xoay màn hình), chỉ cần hiển thị lại
+            getSupportFragmentManager().beginTransaction()
+                    .show(existingFragment)
+                    .commit();
+        }
+    }
+
+    private void showFavoriteListFragment() {
+        FavoriteListFragment favoriteListFragment = new FavoriteListFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(binding.fragmentsFL.getId(), favoriteListFragment, "FavoriteListFragment");
+        fragmentTransaction.commit();
+
+    }
+    private void showProfileFragment() {
+        ProfileFragment profileFragment = new ProfileFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(binding.fragmentsFL.getId(), profileFragment, "ProfileFragment");
+        fragmentTransaction.commit();
+
+    }
+
+    private void showMapsFragment() {
+        replaceFragment(new MapsFragment(), TAG);
+    }
+
+    // Called from fragment_profile.xml via android:onClick
+    public void openPersonalInfo(android.view.View view) {
+        android.util.Log.d("MainActivity", "openPersonalInfo clicked");
+        android.widget.Toast.makeText(this, "Opening Thông tin cá nhân", android.widget.Toast.LENGTH_SHORT).show();
+        PersonalInfoFragment personalInfoFragment = new PersonalInfoFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(binding.fragmentsFL.getId(), personalInfoFragment, "PersonalInfoFragment")
+                .addToBackStack(null)
+                .commit();
+    }
 
     // ----------------- COMMON UTILS -----------------
     private void startLoginOptionsActivity() {
@@ -175,7 +257,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ----------------- STAFF FRAGMENTS -----------------
+    private void showDashboardFragment() {
+        replaceFragment(new DashboardFragment(), "DashboardFragment");
+    }
 
+    private void showQuickOrderFragment() {
+        replaceFragment(new QuickOrderFragment(), "QuickOrderFragment");
+    }
+
+    private void showChatsListFragment() {
+        replaceFragment(new ChatsListFragment(), "ChatsListFragment");
+    }
 
     @Override
     public Context getApplicationContext() {

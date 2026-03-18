@@ -40,8 +40,6 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    //-------------------------------AUTHENTICATION--------------------------------------
-    // Mấy cái login, register ko cần @SkipAuth. Do cơ chế bên ApiClient ko có token thì ko cần auth
     @POST("auth/log-in")
     Call<ApiResponse<AuthenticationResponse>> login(@Body AuthenticationRequest request);
 
@@ -77,7 +75,23 @@ public interface ApiService {
     @retrofit2.http.HTTP(method = "DELETE", path = "user/me", hasBody = true)
     Call<ApiResponse<Void>> deleteMyAccount(@Body DeleteAccountRequest request);
 
+    //-----------------------------------PRODUCT------------------------------------------
+    @GET("api/products")
+    @SkipAuth
+    Call<ApiResponse<PageResponse<ProductResponse>>> getProducts(
+            @Query("sort") String sort
+    );
 
+    @GET("api/products/{id}")
+    Call<ApiResponse<ProductResponse>> getProduct(@Path("id") int id);
+
+    @GET("api/products/category/{categoryId}")
+    Call<ApiResponse<PageResponse<ProductResponse>>> getProductsByCategory(
+            @Path("categoryId") int categoryId,
+            @Query("page") int page,
+            @Query("size") int size);
+
+    // -----------------------------------ORDER-------------------------------------------
     @GET("order/user/{id}")
     Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersByUserId(@Path("id") int id);
 
@@ -105,13 +119,49 @@ public interface ApiService {
     @POST("order")
     Call<ApiResponse<OrderResponse>> createOrder(@Body CreateOrderRequest request, @Query("status") boolean status);
 
+    //---------------------------------PAYMENT------------------------------------------
+    @POST("payment/vnpay-create-payment")
+    Call<ApiResponse<Map<String, String>>> createVNPAYPayment(@Body PaymentRequest request);
+    @POST("payment/momo-create-payment")
+    Call<ApiResponse<Map<String, String>>> createMomoPayment(@Body PaymentRequest request);
 
+    //-----------------------------------CART-------------------------------------------
+    @GET("cart/user/{id}")
+    Call<ApiResponse<CartResponse>> getCartByUserId(@Path("id") int id);
 
-    @GET("api/conversations/{customerId}")
-    Call<ApiResponse<ConversationResponse>> getConversationByCustomerId(@Path("customerId") int id);
+    @POST("cart")
+    Call<ApiResponse<Boolean>> addToCart(@Query("productId") int productId, @Query("userId") int userId);
+
+    @PUT("cart/user/{id}")
+    Call<ApiResponse<CartResponse>> updateCart(@Path("id") int userId, @Body UpdateCartRequest request);
+
+    @DELETE("cart")
+    Call<ApiResponse<Boolean>> removeFromCart(@Query("productId") int productId, @Query("userId") int userId);
 
     @GET("cart/total-quantity/{customerId}")
     Call<ApiResponse<CountResponse>> totalItemsQuantityByCustomerId(@Path("customerId") int customerId);
+
+    // --------------------------------CONVERSATION-------------------------------------
+    // @GET("api/conversations")
+    // Call<ApiResponse<ConversationResponse>> getConversations();
+
+
+
+
+    //    -------------------------------DASHBOARD--------------------------------------
+    @GET("/order/todays/count")
+    Call<ApiResponse<Long>> getTodaysOrderCount();
+
+    @GET("/order/pending/count")
+    Call<ApiResponse<Long>> getPendingOrdersCount();
+
+    @GET("/api/products/low-stock-count")
+    Call<Long> getLowStockCount(@Query("threshold") int threshold);
+    @GET("api/conversations/list/{staffId}")
+    Call<ApiResponse<List<ConversationResponse>>> getConversations(@Path("staffId") int id);
+
+    @GET("api/conversations/{customerId}")
+    Call<ApiResponse<ConversationResponse>> getConversationByCustomerId(@Path("customerId") int id);
 
     // ----------------------------------MESSAGE----------------------------------------
     @GET("api/messages/{customerId}")
@@ -127,41 +177,4 @@ public interface ApiService {
     @GET("api/locations")
     Call<ApiResponse<List<LocationResponse>>> getLocations();
 
-    @GET("api/conversations/list/{staffId}")
-    Call<ApiResponse<List<ConversationResponse>>> getConversations(@Path("staffId") int id);
-
-    //-----------------------------------PRODUCT------------------------------------------
-    @GET("api/products")
-    @SkipAuth
-    Call<ApiResponse<PageResponse<ProductResponse>>> getProducts(
-            @Query("sort") String sort
-    );
-
-    @GET("api/products/{id}")
-    Call<ApiResponse<ProductResponse>> getProduct(@Path("id") int id);
-
-    @GET("api/products/category/{categoryId}")
-    Call<ApiResponse<PageResponse<ProductResponse>>> getProductsByCategory(
-            @Path("categoryId") int categoryId,
-            @Query("page") int page,
-            @Query("size") int size);
-
-    //-----------------------------------CART-------------------------------------------
-    @GET("cart/user/{id}")
-    Call<ApiResponse<CartResponse>> getCartByUserId(@Path("id") int id);
-
-    @POST("cart")
-    Call<ApiResponse<Boolean>> addToCart(@Query("productId") int productId, @Query("userId") int userId);
-
-    @PUT("cart/user/{id}")
-    Call<ApiResponse<CartResponse>> updateCart(@Path("id") int userId, @Body UpdateCartRequest request);
-
-    @DELETE("cart")
-    Call<ApiResponse<Boolean>> removeFromCart(@Query("productId") int productId, @Query("userId") int userId);
-
-    //---------------------------------PAYMENT------------------------------------------
-    @POST("payment/vnpay-create-payment")
-    Call<ApiResponse<Map<String, String>>> createVNPAYPayment(@Body PaymentRequest request);
-    @POST("payment/momo-create-payment")
-    Call<ApiResponse<Map<String, String>>> createMomoPayment(@Body PaymentRequest request);
 }
