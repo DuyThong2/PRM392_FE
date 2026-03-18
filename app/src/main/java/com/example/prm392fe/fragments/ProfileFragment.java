@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment {
                 Glide.with(this)
                         .load("https://i.pinimg.com/736x/30/a8/49/30a8490ff409df33d1e23702cf2c4aa8.jpg")
                         .override(300, 300) // fix size 200x200 pixel
-                        .centerCrop()       // cắt giữa hình để không méo
+                        .centerCrop() // cắt giữa hình để không méo
                         .into(imgAvatar);
 
                 tvName.setText(userResponse.getFullName());
@@ -158,50 +158,35 @@ public class ProfileFragment extends Fragment {
         view.findViewById(R.id.logoutTv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // ✅ Xóa session TRƯỚC khi gọi API
+                SessionManager.getInstance(getActivity()).clearSession();
+                ApiClient.clearApiClient();
+
+                // ✅ Chuyển sang MainActivity ngay lập tức
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finishAffinity();
+
+                // ✅ Gọi API logout sau khi đã chuyển màn hình
                 apiService.logout(LogoutRequest.builder()
-                        .token(SessionManager.getInstance(getActivity()).getAuthToken())
+                        .token(null) // Token đã bị xóa, không cần gửi
                         .build()).enqueue(new Callback<ApiResponse<Void>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<Void>> call, Response<ApiResponse<Void>> response) {
                         if (response.isSuccessful()) {
-                            // Trường hợp THÀNH CÔNG (HTTP 200)
-                            Toast.makeText(getActivity(), "Đang đăng xuất", Toast.LENGTH_SHORT).show();
-                            ApiClient.clearApiClient();
-
-                            SessionManager.getInstance(getActivity()).clearSession();
-                            startActivity(new Intent(getActivity(), MainActivity.class));
+                            Log.d(TAG, "Logout API success");
                         } else {
-                            try {
-                                String errorJson = response.errorBody().string();
-                                Gson gson = new Gson();
-                                ApiResponse<?> errorResponse = gson.fromJson(errorJson, ApiResponse.class);
-
-                                if (errorResponse != null && errorResponse.getMessage() != null) {
-                                    // Hiển thị thông báo lỗi từ Server (User not existed!)
-                                    Toast.makeText(getActivity(), errorResponse.getMessage(), Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(getActivity(), "Lỗi HTTP " + response.code(), Toast.LENGTH_SHORT).show();
-                                }
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Error parsing error body: ", e);
-                                Toast.makeText(getActivity(), "Lỗi không xác định.", Toast.LENGTH_SHORT).show();
-                            }
+                            Log.w(TAG, "Logout API failed: " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResponse<Void>> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Error occured!", Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "onFailure: ", t);
+                        Log.e(TAG, "Logout API error", t);
                     }
                 });
-
             }
         });
 
         return view;
     }
-
-
 }

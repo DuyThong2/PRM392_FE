@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (!sessionManager.isLoggedIn()) {
             startLoginOptionsActivity();
-            finish();
             return; // Dừng lại, không thực hiện các bước sau
         }
 
