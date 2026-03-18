@@ -1,8 +1,12 @@
 package com.example.prm392fe.viewModel;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.prm392fe.models.ApiResponse;
+import com.example.prm392fe.models.PageResponse;
 import com.example.prm392fe.models.requests.CreateOrderRequest;
 import com.example.prm392fe.models.responses.OrderResponse;
 import com.example.prm392fe.repositories.OrderRepository;
@@ -16,7 +20,7 @@ public class OrderViewModel extends ViewModel {
         return orderRepository.getOrdersByUserId(userId);
     }
 
-    public LiveData<OrderResponse> getOrderDetail(int orderId){
+    public LiveData<OrderResponse> getOrderDetail(int orderId) {
         return orderRepository.getOrdersById(orderId);
     }
 
@@ -28,5 +32,46 @@ public class OrderViewModel extends ViewModel {
         return orderRepository.createOrder(request, status);
     }
 
+    private final MutableLiveData<ApiResponse<PageResponse<OrderResponse>>> ordersToday = new MutableLiveData<>();
+
+    public LiveData<ApiResponse<PageResponse<OrderResponse>>> getOrdersToday() {
+        return ordersToday;
+    }
+
+    public void fetchOrdersToday(int page, int size, String sortBy, String sortDir, @Nullable String status) {
+        OrderRepository.getInstance().getOrdersToday(page, size, sortBy, sortDir, status, new OrderRepository.RepositoryCallback<ApiResponse<PageResponse<OrderResponse>>>() {
+            @Override
+            public void onSuccess(ApiResponse<PageResponse<OrderResponse>> result) {
+                ordersToday.postValue(result);
+            }
+
+            @Override
+            public void onError(String error) {
+                ordersToday.postValue(null);
+            }
+        });
+    }
+
+    // LiveData cho tổng đơn hôm nay (không lọc status)
+    private final MutableLiveData<ApiResponse<PageResponse<OrderResponse>>> allOrdersToday = new MutableLiveData<>();
+
+    public LiveData<ApiResponse<PageResponse<OrderResponse>>> getAllOrdersToday() {
+        return allOrdersToday;
+    }
+
+    public void fetchAllOrdersToday(int page, int size, String sortBy, String sortDir) {
+        // Truyền empty string thay vì null để backend không bị NPE
+        OrderRepository.getInstance().getOrdersToday(page, size, sortBy, sortDir, "", new OrderRepository.RepositoryCallback<ApiResponse<PageResponse<OrderResponse>>>() {
+            @Override
+            public void onSuccess(ApiResponse<PageResponse<OrderResponse>> result) {
+                allOrdersToday.postValue(result);
+            }
+
+            @Override
+            public void onError(String error) {
+                allOrdersToday.postValue(null);
+            }
+        });
+    }
 }
 

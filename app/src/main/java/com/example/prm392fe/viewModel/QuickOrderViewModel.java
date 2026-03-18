@@ -29,7 +29,7 @@ public class QuickOrderViewModel extends ViewModel {
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     private int currentPage = 0;
-    private static final int PAGE_SIZE = 2;
+    private static final int PAGE_SIZE = 10;
 
     public LiveData<List<OrderResponse>> getTodayOrders() { return todayOrders; }
     public LiveData<Boolean> getIsLoading() { return isLoading; }

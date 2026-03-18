@@ -97,7 +97,7 @@ public interface ApiService {
     @GET("order/{id}")
     Call<ApiResponse<OrderResponse>> getOrderDetail(@Path("id") int id);
 
-    @GET("order/today")
+    @GET("order")
     Call<ApiResponse<PageResponse<OrderResponse>>> getOrdersToday(
             @Query("page") int page,
             @Query("size") int size,
